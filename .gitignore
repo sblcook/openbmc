@@ -2,3 +2,6 @@ build*/*
 customrc
 *.sw?
 .repo/
+meta-cornelis/
+.vscode/
+opa400-FirmwareTools/

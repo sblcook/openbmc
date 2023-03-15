@@ -1,0 +1,3 @@
+[submodule "opa400-FirmwareTools"]
+	path = opa400-FirmwareTools
+	url = git@github.com:cornelisnetworks/opa400-FirmwareTools.git
