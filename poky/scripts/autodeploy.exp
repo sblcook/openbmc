@@ -47,7 +47,7 @@ if {$force_conservative} {
 set timeout -1
 trap exit {SIGINT SIGTERM}
 lassign $argv board_num if_whole_image
-spawn ./build_and_deploy.sh $board_num $if_whole_image
+spawn ~/openbmc/scripts/build_and_deploy.sh $board_num $if_whole_image
 match_max 100000
 #expect -exact "Adding SSH key\r
 ## Host 10.228.214.53 found: line 53\r

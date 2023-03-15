@@ -57,9 +57,9 @@ cd ~/openbmc/meta-cornelis
 
 # Bundle the image, place it in scratch dir
 image_name=bmc-$(whoami)-$(date +%Y_%m_%d_%H_%m).pldm
-python3 fw_tools/pldm-package/pldm_fwup_pkg_creator.py \
+python3 ~/openbmc/opa400-FirmwareTools/pldm-package/pldm_fwup_pkg_creator.py \
         /scratch/$(whoami)/openbmc/tmp/deploy/images/cnboard/$image_name \
-        fw_tools/pldm-package/bmc-composite.json \
+        ~/openbmc/opa400-FirmwareTools/pldm-package/bmc-composite.json \
         /scratch/$(whoami)/openbmc/tmp/deploy/images/cnboard/image-u-boot \
         /scratch/$(whoami)/openbmc/tmp/deploy/images/cnboard/image-kernel \
         /scratch/$(whoami)/openbmc/tmp/deploy/images/cnboard/image-rofs
@@ -77,12 +77,14 @@ do
     fi
 done
 
+# remove mitm check
+ssh-keygen -f "/home/scook/.ssh/known_hosts" -R $targetboard
 
 echo "Adding SSH key"
 ssh -o StrictHostKeyChecking=no $user@$targetboard sshKey add < ~/.ssh/id_rsa.pub
 
 echo "Flashing switch firmware"
-scp /scratch/$(whoami)/openbmc/tmp/deploy/images/cnboard/$image_name $user@$targetboard:/tmp
+scp -o StrictHostKeyChecking=no /scratch/$(whoami)/openbmc/tmp/deploy/images/cnboard/$image_name $user@$targetboard:/tmp
 
 echo "Rebooting"
 ssh $user@$targetboard reboot
